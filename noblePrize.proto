@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package nobelprizes;
+
+// Import Google's well-known type 'Empty' for cases with no request data
+import "google/protobuf/empty.proto";
+
+// NobelPrizes service definition
+service NobelPrizesService {
+    
+    // Service for Query 1: Total number of laureates in a category between years
+    rpc GetLaureatesByCategoryAndYear (CategoryYearRequest) returns (LaureateCountResponse);
+    
+    // Service for Query 2: Total number of laureates with motivations containing a keyword
+    rpc GetLaureatesByMotivationKeyword (KeywordRequest) returns (LaureateCountResponse);
+    
+    // Service for Query 3: Get laureate info by first and last name
+    rpc GetLaureateInfoByName (NameRequest) returns (LaureateInfoResponse);
+}
+
+// Message for Query 1: Category and Year Range Request
+message CategoryYearRequest {
+    string category = 1;
+    int32 start_year = 2;
+    int32 end_year = 3;
+}
+
+// Message for Query 2: Keyword Request
+message KeywordRequest {
+    string keyword = 1;
+}
+
+// Message for Query 3: Name Request
+message NameRequest {
+    string first_name = 1;
+    string last_name = 2;
+}
+
+// Response message for queries returning laureate count
+message LaureateCountResponse {
+    int32 count = 1;  // Total number of laureates
+}
+
+// Response message for Query 3: Laureate info
+message LaureateInfoResponse {
+    int32 year = 1;
+    string category = 2;
+    string motivation = 3;
+}
