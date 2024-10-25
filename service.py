@@ -48,7 +48,7 @@ class NobelPrizesServiceServicer(noblePrize_pb2_grpc.NobelPrizesServiceServicer)
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     noblePrize_pb2_grpc.add_NobelPrizesServiceServicer_to_server(NobelPrizesServiceServicer(), server)
-    server.add_insecure_port('[::]:50051')
+    server.add_insecure_port('[::]:8080')
     server.start()
     server.wait_for_termination()
 
