@@ -30,9 +30,14 @@ class NobelPrizesServiceServicer(noblePrize_pb2_grpc.NobelPrizesServiceServicer)
     
     def GetLaureatesByMotivationKeyword(self, request, context):
         keyword = request.keyword
-        count = r.ft('prizeIdx1').search(f'@laureates_motivation:*{keyword}*').total
+        result = r.ft('prizeIdx1').search(f'@laureates_motivation:*{keyword}*').total
+
+        total_laureates = 0
+        for doc in result.docs:
+          laureates = json.loads(doc.json)['laureates']
+          total_laureates += len(laureates)
         
-        return noblePrize_pb2.LaureateCountResponse(count=count)
+        return noblePrize_pb2.LaureateCountResponse(count=total_laureates)
     
     def GetLaureateInfoByName(self, request, context):
         first_name = request.first_name
