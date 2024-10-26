@@ -30,7 +30,7 @@ class NobelPrizesServiceServicer(noblePrize_pb2_grpc.NobelPrizesServiceServicer)
     
     def GetLaureatesByMotivationKeyword(self, request, context):
         keyword = request.keyword
-        result = r.ft('prizeIdx1').search(f'@laureates_motivation:*{keyword}*').total
+        result = r.ft('prizeIdx1').search(f'@laureates_motivation:*{keyword}*')
 
         total_laureates = 0
         for doc in result.docs:
