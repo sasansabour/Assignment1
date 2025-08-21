@@ -2,8 +2,10 @@ import grpc
 import noblePrize_pb2
 import noblePrize_pb2_grpc
 
+GRPC_HOST = os.getenv("GRPC_HOST")
+
 def run():
-    with grpc.secure_channel('grpc-284279361159.us-central1.run.app:443', grpc.ssl_channel_credentials()) as channel:
+    with grpc.secure_channel(GRPC_HOST, grpc.ssl_channel_credentials()) as channel:
         stub = noblePrize_pb2_grpc.NobelPrizesServiceStub(channel)
         
         # Query 1: Laureates by category and year
