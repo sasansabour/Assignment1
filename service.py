@@ -1,3 +1,4 @@
+import os
 import grpc
 from concurrent import futures
 import redis
@@ -5,11 +6,15 @@ import noblePrize_pb2
 import noblePrize_pb2_grpc
 import json
 
+REDIS_HOST = os.getenv("REDIS_HOST")
+REDIS_PORT = int(os.getenv("REDIS_PORT", 19095))
+REDIS_PASSWORD = os.getenv("REDIS_PASSWORD")
+
 # Redis client setup
 r = redis.StrictRedis(
-  host='redis-19095.c259.us-central1-2.gce.redns.redis-cloud.com',
-  port=19095,
-  password='1TyE0QHjs23zaeIsAoVitZ3WnzmIM3UB')
+  host=REDIS_HOST,
+  port=REDIS_PORT,
+  password=REDIS_PASSWORD)
 
 class NobelPrizesServiceServicer(noblePrize_pb2_grpc.NobelPrizesServiceServicer):
     
